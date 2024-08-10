@@ -3,6 +3,11 @@ import chromadb
 from openai import OpenAI
 from dotenv import load_dotenv
 
+# Add the pysqlite3-binary workaround
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 load_dotenv()
 
 app = Flask(__name__)
