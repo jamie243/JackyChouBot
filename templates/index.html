@@ -116,15 +116,21 @@ button {
                 },
                 body: `query=${encodeURIComponent(query)}`
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                document.getElementById('response').innerText = data.response;
+                document.getElementById('response').innerText = data.response || "No response from server.";
             })
             .catch(error => {
                 document.getElementById('response').innerText = "An error occurred. Please try again.";
                 console.error('Error:', error);
             });
         }
+
     </script>
 </body>
 </html>
