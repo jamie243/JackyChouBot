@@ -2,3 +2,4 @@ Flask
 chromadb
 openai
 python-dotenv
+gunicorn
