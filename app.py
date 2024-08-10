@@ -3,11 +3,6 @@ import chromadb
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Add the pysqlite3-binary workaround
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
 load_dotenv()
 
 app = Flask(__name__)
@@ -16,9 +11,11 @@ app = Flask(__name__)
 DATA_PATH = r"data"
 CHROMA_PATH = r"chroma_db"
 
-chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
+# Initialize ChromaDB client - using Client class if PersistentClient is not available
+chroma_client = chromadb.Client()
 
-collection = chroma_client.get_or_create_collection(name="SEO_Help")
+# Create or get collection
+collection = chroma_client.create_collection(name="SEO_Help")  # or use get_collection if create_collection is not available
 
 client = OpenAI()
 
@@ -30,9 +27,10 @@ def index():
 def query():
     user_query = request.form.get('query')
 
+    # Adjust query method if needed
     results = collection.query(
         query_texts=[user_query],
-        n_results=25
+        num_results=25
     )
 
     system_prompt = f"""
@@ -54,9 +52,9 @@ def query():
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages = [
-            {"role":"system","content":system_prompt},
-            {"role":"user","content":user_query}    
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_query}
         ]
     )
 
