@@ -1,5 +1,5 @@
 Flask
-chromadb
+chromadb==0.3.29
 openai
 python-dotenv
 gunicorn
