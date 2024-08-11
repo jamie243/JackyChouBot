@@ -167,8 +167,8 @@
                 if (data.top_results && data.top_results.length > 0) {
                     data.top_results.slice(0, 3).forEach((result, index) => {
                         const title = document.createElement('p');
-                        // Remove the "PDF" extension if present
-                        const cleanedTitle = result.replace(/\.pdf$/i, '');
+                        // Remove "data\" prefix and "PDF" extension if present
+                        const cleanedTitle = result.replace(/^data\\/, '').replace(/\.pdf$/i, '');
                         title.innerText = `${index + 1}. ${cleanedTitle}`;
                         videoTitles.appendChild(title);
                     });
