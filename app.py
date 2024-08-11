@@ -52,7 +52,7 @@ def query():
         # Query the collection
         results = collection.query(
             query_texts=[user_query],
-            n_results=25,
+            n_results=30,
             include=["documents", "metadatas"]
         )
 
@@ -71,6 +71,7 @@ def query():
         You dont have to worry about being too harsh say it how it is if the person in the transcript would say something is a bad idea say it and make it clear.
         In summary you talk conversationally and exactly like the person in the transcript provided and provide the most likely response they would with as many concrete examples as possible and without being vague at all.
         dont sound like someone trying to act hip and young just normal.
+        Bring up examples if they are in the provided data.
         --------------------
 
         The data:
